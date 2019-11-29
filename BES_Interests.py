@@ -3,21 +3,49 @@
 # Author: Blake Stefansen
 
 
+#//TODO: use the decimal class
+#        add comments
+
 def intro():
     print("")
     print("Welcome to the interest calculator")
     print("")
 
+def dlrTest(loanAmount):
+    if loanAmount[0] == "$":
+        newLoanAmount = loanAmount.replace("$", "")
+        return newLoanAmount
+    return loanAmount
+
+def commaTest(loanAmount):
+    if "," in loanAmount:
+        newLoanAmount = loanAmount.replace(",", "")
+        return newLoanAmount
+    return loanAmount
+
+def kTest(loanAmount):
+    if "K" in loanAmount:
+        newLoanAmount = loanAmount.replace("K", "")
+        newLoanAmount = float(newLoanAmount)*1000
+        return newLoanAmount
+    return loanAmount
+
+def percentTest(rate):
+    if "%" in rate:
+        replace = rate.replace("%", "")
+        return replace
+    return rate
+
 def calc(loanAmount, rate):
-    return
+    rateDecimal = float(rate)*0.01
+    interest = float(loanAmount)*rateDecimal
+    return interest
 
 def output(loanAmount, rate):
-    rateDecimal = rate*0.01
-    interest = loanAmount*rateDecimal
     print("")
-    print("Loan amount: $" + str(loanAmount))
-    print("Interest rate: " + str(rate) + "%")
-    print("Interest amount: $" + str(interest))
+    print("Loan amount: " + str('${:,.2f}'.format(float(loanAmount))))
+    print("Interest rate: " + str('{:.3f}%'.format(float(rate))))
+    print("Interest amount: " + str('${:,.2f}'.format(float(calc(loanAmount, rate)))))
     print("")
 
 def again():
@@ -26,19 +54,24 @@ def again():
         main()
     else:
         print("")
-
-def outro():
-    print("Bye!")
-    print("")
+        print("Bye!")
+        print("")
 
 def main():
     intro()
-    loanAmount = float(input("Enter loan amount: $"))
-    rate = float(input("Enter interest rate: %"))
+    loanAmount = str(input("Enter loan amount: "))
+    rate = str(input("Enter interest rate: "))
+    dlrTest(loanAmount)
+    loanAmount = dlrTest(loanAmount)
+    commaTest(loanAmount)
+    loanAmount = commaTest(loanAmount)
+    kTest(loanAmount)
+    loanAmount = kTest(loanAmount)
+    percentTest(rate)
+    rate = percentTest(rate)
     calc(loanAmount, rate)
     output(loanAmount, rate)
     again()
-    outro()
 
 if __name__ == '__main__':
     main()
